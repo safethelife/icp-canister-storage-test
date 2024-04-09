@@ -1,0 +1,26 @@
+{
+  "canisters": {
+    "icp-storage-test-backend": {
+      "main": "src/icp-storage-test-backend/main.mo",
+      "type": "motoko"
+    },
+    "icp-storage-test-frontend": {
+      "dependencies": [
+        "icp-storage-test-backend"
+      ],
+      "source": [
+        "src/icp-storage-test-frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "icp-storage-test-frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
