@@ -1,6 +1,42 @@
-# icp-storage-test
+# icp_canister_storage_test
+This repository is for testing out canister storage and databases.
+Welcome to our open-source project for handling DICOM files on the Dfinity Internet Computer. This DApp facilitates the storage and management of DICOM medical imaging files, leveraging the power of Canisters for scalable, secure, and efficient data handling.
 
-Welcome to your new icp-storage-test project and to the Internet Computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
+## Overview
+
+This project demonstrates a decentralized application (DApp) that allows users to upload, store, and manage DICOM files. It explores two storage options: external databases and the Canister's stable memory storage, offering flexibility based on your needs.
+
+## Features
+
+- DICOM file upload through Canister calls.
+- Option to store files in an external database or Canister's stable memory.
+- Secure and efficient file handling.
+
+## Lifecycle Overview
+
+### DApp and Canister Lifecycle
+
+1. **Initialization:** The DApp initializes the Canister with necessary configurations.
+2. **User Interaction:** Users interact with the DApp through a user-friendly interface to upload DICOM files.
+3. **Canister Call:** The DApp makes Canister calls to process and store the DICOM files.
+4. **Storage Decision:** Depending on the configured storage option, the Canister either stores the file in its stable memory or interacts with an external database.
+5. **Completion:** The user receives confirmation of the successful storage of the DICOM file.
+
+### Storage Options
+
+#### Using an External Database
+
+- **Pros:** Allows for complex queries and may offer more mature management tools.
+- **Cons:** Requires additional infrastructure and management. Potentially introduces centralization.
+- **Implementation:** The Canister interfaces with the external database through backend services, securely storing and retrieving DICOM files as requested.
+
+#### Using Canister's Stable Memory Storage
+
+- **Pros:** Fully decentralized, leveraging the inherent security and scalability of the Internet Computer.
+- **Cons:** More limited compared to traditional databases, especially for complex queries.
+- **Implementation:** DICOM files are directly stored in the Canister's stable memory. This option ensures data permanence and resilience.
+
+## Getting Started
 
 To get started, you might want to explore the project directory structure and the default configuration file. Working with this project in your development environment will not affect any production deployment or identity tokens.
 
