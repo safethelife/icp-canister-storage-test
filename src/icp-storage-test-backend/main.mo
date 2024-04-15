@@ -1,37 +1,54 @@
-import Http "mo:base/Http";
-import Blob "mo:base/Blob";
-import Principal "mo:base/Principal";
+import FileDatabase "./fileDatabase";
+import UserDatabase "./userDatabase";
+import Types "./types";
+import Utils "./utils";
 
-actor {
-    type UserId = Text;
-    type FileContent = Blob;
-    type Storage = {#file: FileContent; #userId: UserId};
+actor API {
+  var fileDirectory: FileDatabase.Directory = FileDatabase.Directory();
+  var userDirectory: UserDatabase.Directory = UserDatabase.Directory();
 
-    private var storage: [Storage] = [];
+  type File = Types.File;
+  type FileId = Types.FileId;
+  type User = Types.User;
+  type UserId = Types.UserId;
 
-    public shared func http_request(request: Http.Request): async Http.Response {
-        // 요청 URL 경로 확인
-        if (request.method == "POST" and request.url == "/image") {
-            // 사용자 ID 추출
-            let userId = request.headers.find(func ((key, _)) : Bool { key.toLowerCase() == "user-id" }).map<UserId>(func (_, value) { value }).get("");
-            let fileContent = request.body;
+  // Healthcheck
 
-            // 저장소에 사용자 ID와 파일 저장
-            storage := storage + [{#file: fileContent; #userId: userId}];
+  public func healthcheck(): async Bool { true };
 
-            // 성공 응답 반환
-            return {
-                body = Blob.fromText("Image uploaded successfully."),
-                headers = [("Content-Type", "text/plain")],
-                status_code = 200,
-            };
-        } else {
-            // /image 엔드포인트 외의 다른 경로 또는 다른 HTTP 메소드에 대한 요청 처리
-            return {
-                body = Blob.fromText("Not Found or Method Not Allowed"),
-                headers = [("Content-Type", "text/plain")],
-                status_code = match (request.method == "POST") { true => 404; false => 405; },
-            };
-        }
-    }
+  // Guilds
+
+  public shared func createFile(fileId: FileId, file: File): async () {
+    fileDirectory.createOne(fileId, guild);
+  };
+
+  public shared func updateFile(file: File): async () {
+    fileDirectory.updateOne(file.id, file);
+  };
+
+  public query func getGuild(fileId: FileId): async File {
+    Utils.getFile(fileDirectory, fileId)
+  };
+
+  public query func getAllFiles(): async [File] {
+    fileDirectory.findAll()
+  };
+
+  // User
+
+  public shared func createUser(userId: UserId, user: User): async () {
+    userDirectory.createOne(userId, user);
+  };
+
+  public shared func updateUser(user: User): async () {
+    userDirectory.updateOne(user.id, user);
+  };
+
+  public query func getUser(userId: UserId): async User {
+    Utils.getUser(userDirectory, userId)
+  };
+
+  public query func getAllUsers(): async [User] {
+    userDirectory.findAll()
+  };
 };
