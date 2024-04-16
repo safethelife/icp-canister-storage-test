@@ -3,7 +3,7 @@ import UserDatabase "./userDatabase";
 import Types "./types";
 import Utils "./utils";
 
-actor API {
+actor Main {
   var fileDirectory: FileDatabase.Directory = FileDatabase.Directory();
   var userDirectory: UserDatabase.Directory = UserDatabase.Directory();
 
@@ -12,14 +12,10 @@ actor API {
   type User = Types.User;
   type UserId = Types.UserId;
 
-  // Healthcheck
-
-  public func healthcheck(): async Bool { true };
-
-  // Guilds
+  // Files
 
   public shared func createFile(fileId: FileId, file: File): async () {
-    fileDirectory.createOne(fileId, guild);
+    fileDirectory.createOne(fileId, file);
   };
 
   public shared func updateFile(file: File): async () {
