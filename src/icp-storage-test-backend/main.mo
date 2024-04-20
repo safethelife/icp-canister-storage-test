@@ -22,7 +22,7 @@ actor Main {
     fileDirectory.updateOne(file.id, file);
   };
 
-  public query func getGuild(fileId: FileId): async File {
+  public query func getFile(fileId: FileId): async File {
     Utils.getFile(fileDirectory, fileId)
   };
 
